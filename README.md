@@ -1,7 +1,15 @@
-# Project 5: Traffic
+```
+Project  Report on Traffic Light Dectector
+Index:
+1.	Introduction
+2.	Background
+3.	Underlying Concepts 
+4.	Specifications
+Introduction:
+This project implements an AI to identify which traffic sign appears in a photograph. It is designed with Python. It has a comprehensive and large standard library that has automatic memory management and dynamic features. The ones used in this project are OpenCV, TensorFlow and Scikit-learn. 
+The project was tested and it turned out to be 96.06% accurate.
 
-Write an AI to identify which traffic sign appears in a photograph.
-
+```
 ```
 $ python traffic.py gtsrb
 Train on 15984 samples
@@ -27,42 +35,58 @@ Epoch 10/10
 15984/15984 [==============================] - 8s 528us/sample - loss: 0.1961 - accuracy: 0.9418
 10656/10656 - 2s - loss: 0.1392 - accuracy: 0.9606
 ```
+```
+Underlying Concepts:
+Gradient Descent
+Algorithm for minimizing loss when training a neural network.
+•	Calculate the gradient based on all data points: direction that will lead to decreasing loss.
+But it would be very complex and time taking.
+Alternatives:-
+Stochastic Gradient Descent
+Start with a random choice of weights. 
+• Repeat:
+ • Calculate the gradient based on one data point: direction that will lead to decreasing loss.
+ • Update weights according to the gradient.
+Mini-Batch Gradient Descent
+.  • Calculate the gradient based on one small batch: direction that will lead to decreasing loss. 
+Multilayer neural network 
+Artificial neural network with an input layer, an output layer, and at least one hidden layer. (Instead of using perceptron, we use multilevel neural network because perceptron is only capable of learning linearly separable decision boundary.)
+Backpropagation 
+Algorithm for training neural networks with hidden layers.
+• Start with a random choice of weights. 
+• Repeat: 
+• Calculate error for output layer. 
+• For each layer, starting with output layer, and moving inwards towards earliest hidden layer: 
+• Propagate error back one layer. 
+• Update weights
+Deep neural networks 
+Neural network with multiple hidden layers.
 
-## Video
-
-[![Project 5: Traffic Video](http://img.youtube.com/vi/6ehpn1vae38/0.jpg)](https://youtu.be/6ehpn1vae38)
-
-## Background
-
+Dropout 
+Temporarily removing units — selected at random — from a neural network to prevent over-reliance on certain units. (to avoid overfitting)
+Computer vision 
+Computational methods for analyzing and understanding digital images
+Image convolution 
+Applying a filter that adds each pixel value of an image to its neighbors, weighted according to a kernel matrix.
+Pooling 
+Reducing the size of an input by sampling from regions in the input. This is done to avoid overfitting.
+Max-pooling 
+Pooling by choosing the maximum value in each region. 
+Flattening
+Flatten our pooled feature map into a column like in the image below. The reason we do this is that we're going to need to insert this data into an artificial neural network later on.
+Background:
 As research continues in the development of self-driving cars, one of the key challenges is computer vision, allowing these cars to develop an understanding of their environment from digital images. In particular, this involves the ability to recognize and distinguish road signs – stop signs, speed limit signs, yield signs, and more.
+In this project, TensorFlow is used to build a neural network to classify road signs based on an image of those signs. To do so, a  labeled dataset: a collection of images that have already been categorized by the road sign represented in them, is required.
+Several such data sets exist, but for this project, German Traffic Sign Recognition Benchmark (GTSRB) dataset is used, which contains thousands of images of 43 different kinds of road signs.
+Specifications:
+•	The load_data function should accept as an argument data_dir, representing the path to a directory where the data is stored, and return image arrays and labels for each image in the data set.
+o	 data_dir will contain one directory named after each category, numbered 0 through NUM_CATEGORIES - 1. Inside each category directory will be some number of image files.
+o	 OpenCV-Python module (cv2) is used to read each image as a numpy.ndarray (a numpy multidimensional array). To pass these images into a neural network, the images will need to be the same size, so be sure to resize each image to have width IMG_WIDTH and height IMG_HEIGHT.
+o	The function returns a tuple (images, labels). Images are be a list of all of the images in the data set, where each image is represented as a numpy.ndarray of the appropriate size.  labels is a list of integers, representing the category number for each of the corresponding images in the images list.
+o	The function is platform-independent: that is to say, it works regardless of operating system. 
+•	The get_model function returns a compiled neural network model.
+o	 The input to the neural network will be of the shape (IMG_WIDTH, IMG_HEIGHT, 3) (that is, an array representing an image of width IMG_WIDTH, height IMG_HEIGHT, and 3 values for each pixel for red, green, and blue).
+o	The output layer of the neural network has NUM_CATEGORIES units, one for each of the traffic sign categories.
+```
 
-In this project, you’ll use TensorFlow to build a neural network to classify road signs based on an image of those signs. To do so, you’ll need a labeled dataset: a collection of images that have already been categorized by the road sign represented in them.
 
-Several such data sets exist, but for this project, we’ll use the [German Traffic Sign Recognition Benchmark](http://benchmark.ini.rub.de/?section=gtsrb&subsection=news) (GTSRB) dataset, which contains thousands of images of 43 different kinds of road signs.
-
-## Specification
-
-Complete the implementation of `load_data` and `get_model` in `traffic.py`.
-
-- The `load_data` function should accept as an argument `data_dir`, representing the path to a directory where the data is stored, and return image arrays and labels for each image in the data set.
-    - You may assume that `data_dir` will contain one directory named after each category, numbered `0` through `NUM_CATEGORIES - 1`. Inside each category directory will be some number of image files.
-    - Use the OpenCV-Python module (`cv2`) to read each image as a `numpy.ndarray` (a `numpy` multidimensional array). To pass these images into a neural network, the images will need to be the same size, so be sure to resize each image to have width `IMG_WIDTH` and height `IMG_HEIGHT`.
-    - The function should return a tuple `(images, labels)`. `images` should be a list of all of the images in the data set, where each image is represented as a `numpy.ndarray` of the appropriate size. `labels` should be a list of integers, representing the category number for each of the corresponding images in the `images` list.
-    - Your function should be platform-independent: that is to say, it should work regardless of operating system. Note that on macOS, the `/` character is used to separate path components, while the `\` character is used on Windows. Use `os.sep` and `os.path.join` as needed instead of using your platform’s specific separator character.
-- The `get_model` function should return a compiled neural network model.
-    - You may assume that the input to the neural network will be of the shape `(IMG_WIDTH, IMG_HEIGHT, 3)` (that is, an array representing an image of width `IMG_WIDTH`, height `IMG_HEIGHT`, and `3` values for each pixel for red, green, and blue).
-    - The output layer of the neural network should have `NUM_CATEGORIES` units, one for each of the traffic sign categories.
-    - The number of layers and the types of layers you include in between are up to you. You may wish to experiment with:
-        - different numbers of convolutional and pooling layers
-        - different numbers and sizes of filters for convolutional layers
-        - different pool sizes for pooling layers
-        - different numbers and sizes of hidden layers
-        - dropout
-
-Ultimately, much of this project is about exploring documentation and investigating different options in `cv2` and `tensorflow` and seeing what results you get when you try them!
-
-You should not modify anything else in `traffic.py` other than the functions the specification calls for you to implement, though you may write additional functions and/or import other Python standard library modules. You may also import `numpy` or `pandas`, if familiar with them, but you should not use any other third-party Python modules. You may modify the global variables defined at the top of the file to test your program with other values.
-
-## Acknowledgements
-
-Data provided by [J. Stallkamp, M. Schlipsing, J. Salmen, and C. Igel. The German Traffic Sign Recognition Benchmark: A multi-class classification competition. In Proceedings of the IEEE International Joint Conference on Neural Networks, pages 1453–1460. 2011](http://benchmark.ini.rub.de/index.php?section=gtsrb&subsection=dataset#Acknowledgements)
